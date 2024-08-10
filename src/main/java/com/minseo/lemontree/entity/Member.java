@@ -58,4 +58,15 @@ public class Member {
     @NotNull
     @Column(name = "month_limit")
     private Long monthLimit;
+
+    public boolean isActive(){
+        if (this.getMemberStatus().equals(MemberStatus.ACTIVE)) {
+            return true;
+        }
+        return false;
+    }
+
+    public void updateBalance(Long balance) {
+        this.balance = balance;
+    }
 }

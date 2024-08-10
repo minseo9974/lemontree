@@ -1,0 +1,10 @@
+### 결제 요청
+POST http://localhost:8080/payment
+Authorization: lemontree
+Content-Type: application/json
+
+{
+  "memberId": 1999,
+  "productPrice": 1000,
+  "orderId": 16
+}

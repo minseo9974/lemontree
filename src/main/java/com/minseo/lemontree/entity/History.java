@@ -1,8 +1,6 @@
 package com.minseo.lemontree.entity;
 
-import com.minseo.lemontree.converter.HistoryStatusConverter;
 import com.minseo.lemontree.converter.HistoryTypeConverter;
-import com.minseo.lemontree.domain.HistoryStatus;
 import com.minseo.lemontree.domain.HistoryType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -18,6 +16,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -46,8 +45,8 @@ public class History {
     private Member member;
 
     @NotNull
-    @Column(name = "product_id")
-    private Long productId;
+    @Column(name = "order_id")
+    private Long orderId;
 
     @NotNull
     @Column(name = "type")
@@ -62,8 +61,12 @@ public class History {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @NotNull
-    @Column(name = "status")
-    @Convert(converter = HistoryStatusConverter.class)
-    private HistoryStatus historyStatus;
+    @Builder
+    public History(Member member, Long orderId, HistoryType historyType, Long money) {
+        this.member = member;
+        this.orderId = orderId;
+        this.historyType = historyType;
+        this.money = money;
+        this.createdAt = LocalDateTime.now();
+    }
 }

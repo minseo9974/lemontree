@@ -49,4 +49,16 @@ public class AmountUsed {
     @NotNull
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
+
+    public void updateDayAmountUsed(Long amount) {
+        this.dayAmountUsed = amount;
+    }
+
+    public void updateMonthAmountUsed(Long amount) {
+        this.monthAmountUsed = amount;
+    }
+
+    public void updateLastTime(LocalDateTime now) {
+        this.lastUpdate = now;
+    }
 }

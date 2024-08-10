@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 
 /**
- * class: HistoryStatus.
+ * class: HistoryType.
  * 결제/취소/페이백/페이백취소 타입을 관리하는 enum.
  *
  * @author devminseo

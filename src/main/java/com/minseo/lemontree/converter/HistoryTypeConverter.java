@@ -5,7 +5,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 /**
- * class: HistoryStatusConverter.
+ * class: HistoryTypeConverter.
  * 파라미터로 받는 String 상태값과 DB에 저장하는 tinyint 값을 교환해주는 컨버터 클래스입니다.
  *
  * @author devminseo

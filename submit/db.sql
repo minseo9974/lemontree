@@ -12,11 +12,10 @@ CREATE TABLE `member` (
 CREATE TABLE `history` (
                            `history_id`	BIGINT	NOT NULL AUTO_INCREMENT,
                            `member_id`	BIGINT	NOT NULL,
-                           `product_id`	INT	NOT NULL,
+                           `order_id`	INT	NOT NULL,
                            `type`	TINYINT	NOT NULL,
                            `money`	BIGINT	NOT NULL,
                            `created_at`	DATETIME	NOT NULL,
-                           `status`	TINYINT	NOT NULL,
                             PRIMARY KEY (`history_id`)
 );
 
@@ -43,4 +42,24 @@ ALTER TABLE `amount_used` ADD CONSTRAINT `FK_member_TO_amount_used_1` FOREIGN KE
     REFERENCES `member` (
                          `member_id`
         );
+
+# dummy data
+insert into member (member_id, status, balance, max_balance, once_limit, day_limit,
+                    month_limit) value (1999, 0, 10000, 15000, 3000, 6000, 9000);
+
+insert into amount_used (amount_used_id, member_id, day_amount_used, month_amount_used,
+                         last_update) VALUE (0, 1999, 0, 0, '2024-08-10 17:46:10');
+
+insert into member (member_id, status, balance, max_balance, once_limit, day_limit,
+                    month_limit) value (2000, 0, 10000, 15000, 3000, 6000, 9000);
+
+insert into amount_used (amount_used_id, member_id, day_amount_used, month_amount_used,
+                         last_update) VALUE (0, 2000, 0, 0, '2024-08-10 17:46:10');
+
+insert into member (member_id, status, balance, max_balance, once_limit, day_limit,
+                    month_limit) value (2001, 0, 10000, 15000, 3000, 6000, 9000);
+
+insert into amount_used (amount_used_id, member_id, day_amount_used, month_amount_used,
+                         last_update) VALUE (0, 2001, 0, 0, '2024-08-10 17:46:10');
+
 
