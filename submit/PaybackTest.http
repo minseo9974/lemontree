@@ -7,3 +7,13 @@ Content-Type: application/json
   "memberId": 1999,
   "orderId": 20
 }
+
+### 페이백 취소 요청
+POST http://localhost:8080/payback/cancel
+Authorization: lemontree
+Content-Type: application/json
+
+{
+  "memberId": 1999,
+  "orderId": 20
+}

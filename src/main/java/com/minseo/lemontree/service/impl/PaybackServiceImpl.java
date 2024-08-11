@@ -1,11 +1,13 @@
 package com.minseo.lemontree.service.impl;
 
 import com.minseo.lemontree.domain.HistoryType;
+import com.minseo.lemontree.dto.request.PaybackCancelRequest;
 import com.minseo.lemontree.dto.request.PaybackRequest;
 import com.minseo.lemontree.entity.History;
 import com.minseo.lemontree.entity.Member;
 import com.minseo.lemontree.exception.AlreadyOrderedException;
 import com.minseo.lemontree.exception.HistoryNotFoundException;
+import com.minseo.lemontree.exception.InsufficientBalanceException;
 import com.minseo.lemontree.exception.MemberInActiveException;
 import com.minseo.lemontree.exception.MemberNotFoundException;
 import com.minseo.lemontree.repository.HistoryRepository;
@@ -78,6 +80,46 @@ public class PaybackServiceImpl implements PaybackService {
         }
 
         historyService.saveHistory(member, paybackMoney, paybackRequest.getOrderId(), HistoryType.PAYBACK);
+
+    }
+
+    /**
+     * 1. 유효성 검사
+     * 2. 사용자 상태 검사
+     * 3. 페이백 내역 및 취소 중복 체크 검사
+     * 4. 회원 잔고 페이백 회수
+     * 5. history 기록
+     *
+     * @param cancelRequest 페이백 취소를 위한 정보
+     */
+    @Transactional(propagation = Propagation.REQUIRED, timeout = 5)
+    @Override
+    public void paybackCancel(PaybackCancelRequest cancelRequest) {
+        Member member =
+                memberRepository.findById(cancelRequest.getMemberId()).orElseThrow(MemberNotFoundException::new);
+
+        if (!member.isActive()) {
+            throw new MemberInActiveException();
+        }
+
+        History paybackSheet = historyRepository.findWithPessimisticLockByMemberAndOrderIdAndHistoryType(member,
+                        cancelRequest.getOrderId(), HistoryType.PAYBACK)
+                .orElseThrow(() -> new HistoryNotFoundException(HistoryType.PAYBACK.getParameter()));
+
+        if (historyService.checkHistoryExists(member, cancelRequest.getOrderId(), HistoryType.PAYBACK_CANCEL)) {
+            throw new AlreadyOrderedException("페이백 취소");
+        }
+
+        Long paybackMoney = paybackSheet.getMoney();
+        Long memberCurrentBalance = member.getBalance();
+
+        if (memberCurrentBalance < paybackMoney) {
+            throw new InsufficientBalanceException();
+        }
+
+        member.updateBalance(Math.subtractExact(memberCurrentBalance, paybackMoney));
+
+        historyService.saveHistory(member, paybackMoney, cancelRequest.getOrderId(), HistoryType.PAYBACK_CANCEL);
 
     }
 }

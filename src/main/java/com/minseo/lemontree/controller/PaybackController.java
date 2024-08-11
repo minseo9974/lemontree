@@ -1,6 +1,7 @@
 package com.minseo.lemontree.controller;
 
 import com.minseo.lemontree.annotation.Auth;
+import com.minseo.lemontree.dto.request.PaybackCancelRequest;
 import com.minseo.lemontree.dto.request.PaybackRequest;
 import com.minseo.lemontree.service.PaybackService;
 import jakarta.validation.Valid;
@@ -29,9 +30,17 @@ public class PaybackController {
 
     @Auth
     @PostMapping()
-    public ResponseEntity<String> payback(@Valid @RequestBody PaybackRequest request) {
+    public ResponseEntity<String> paybackRequest(@Valid @RequestBody PaybackRequest request) {
         paybackService.payback(request);
 
         return ResponseEntity.ok(request.getMemberId() + "님의 Payback Success!");
+    }
+
+    @Auth
+    @PostMapping("/cancel")
+    public ResponseEntity<String> paybackCancelRequest(@Valid @RequestBody PaybackCancelRequest request) {
+        paybackService.paybackCancel(request);
+
+        return ResponseEntity.ok(request.getMemberId() + "님의 Payback Cancel Success!");
     }
 }
