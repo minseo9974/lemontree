@@ -45,21 +45,21 @@ ALTER TABLE `amount_used` ADD CONSTRAINT `FK_member_TO_amount_used_1` FOREIGN KE
 
 # dummy data
 insert into member (member_id, status, balance, max_balance, once_limit, day_limit,
-                    month_limit) value (1999, 0, 10000, 15000, 3000, 6000, 9000);
+                    month_limit) value (1999, 0, 10000, 15000, 3000, 10000, 15000);
 
 insert into amount_used (amount_used_id, member_id, day_amount_used, month_amount_used,
                          last_update) VALUE (0, 1999, 0, 0, '2024-08-10 17:46:10');
 
 insert into member (member_id, status, balance, max_balance, once_limit, day_limit,
-                    month_limit) value (2000, 0, 10000, 15000, 3000, 6000, 9000);
+                    month_limit) value (2000, 0, 15000, 20000, 4000, 11000, 20000);
 
 insert into amount_used (amount_used_id, member_id, day_amount_used, month_amount_used,
-                         last_update) VALUE (0, 2000, 0, 0, '2024-08-10 17:46:10');
+                         last_update) VALUE (0, 2000, 0, 0, '2024-08-11 17:46:10');
 
 insert into member (member_id, status, balance, max_balance, once_limit, day_limit,
-                    month_limit) value (2001, 0, 10000, 15000, 3000, 6000, 9000);
+                    month_limit) value (2001, 0, 25000, 30000, 6000, 16000, 29000);
 
 insert into amount_used (amount_used_id, member_id, day_amount_used, month_amount_used,
-                         last_update) VALUE (0, 2001, 0, 0, '2024-08-10 17:46:10');
+                         last_update) VALUE (0, 2001, 0, 0, '2024-08-12 17:46:10');
 
 

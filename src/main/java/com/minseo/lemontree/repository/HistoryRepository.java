@@ -19,4 +19,6 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value = "5000")})
     Optional<History> findWithPessimisticLockByMemberAndOrderIdAndHistoryType(Member member, Long orderId,
                                                                               HistoryType historyType);
+
+    Optional<History> findByMemberAndOrderIdAndHistoryType(Member member, Long orderId, HistoryType historyType);
 }

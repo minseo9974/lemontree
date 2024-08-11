@@ -1,5 +1,6 @@
 package com.minseo.lemontree.service;
 
+import com.minseo.lemontree.entity.History;
 import com.minseo.lemontree.entity.Member;
 
 /**
@@ -32,4 +33,12 @@ public interface AmountUsedService {
      * @param amount 추가할 금액
      */
     void updateAmountUsed(Member member, Long amount);
+
+    /**
+     * 결제 취소시 사용량을 일/월에 맞춰 업데이트합니다.
+     *
+     * @param member 회원 식별
+     * @param history 업데이트할 정보
+     */
+    void updateCancelAmountUsed(Member member, History history);
 }

@@ -31,6 +31,10 @@ public class GlobalControllerAdvice {
         return new ResponseEntity<>(new ApiError(false, e.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
+    /**
+     * 컨트롤러들의 request DTO에 대한 공통 Validation 핸들러 처리 메서드 입니다.
+     *
+     */
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public ResponseEntity<ApiError> handleValidationException(MethodArgumentNotValidException e) {
         List<String> result = e.getBindingResult().getAllErrors().stream()

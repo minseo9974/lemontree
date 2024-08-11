@@ -1,6 +1,7 @@
 package com.minseo.lemontree.controller;
 
 import com.minseo.lemontree.annotation.Auth;
+import com.minseo.lemontree.dto.request.PaymentCancelRequest;
 import com.minseo.lemontree.dto.request.PaymentRequest;
 import com.minseo.lemontree.service.PaymentService;
 import jakarta.validation.Valid;
@@ -33,5 +34,13 @@ public class PaymentController {
         paymentService.payment(request);
 
         return ResponseEntity.ok(request.getMemberId() + "님의 Payment Success!");
+    }
+
+    @Auth
+    @PostMapping("/cancel")
+    public ResponseEntity<String> paymentCancelRequest(@Valid @RequestBody PaymentCancelRequest request) {
+        paymentService.paymentCancel(request);
+
+        return ResponseEntity.ok("님의 Payment Cancel Success!");
     }
 }

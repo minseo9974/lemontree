@@ -6,5 +6,16 @@ Content-Type: application/json
 {
   "memberId": 1999,
   "productPrice": 2000,
-  "orderId": 20
+  "orderId": 21
+}
+
+
+### 결제 취소 요청
+POST http://localhost:8080/payment/cancel
+Authorization: lemontree
+Content-Type: application/json
+
+{
+  "memberId": 1999,
+  "orderId": 21
 }

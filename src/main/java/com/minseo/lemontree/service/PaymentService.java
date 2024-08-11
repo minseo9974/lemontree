@@ -1,5 +1,6 @@
 package com.minseo.lemontree.service;
 
+import com.minseo.lemontree.dto.request.PaymentCancelRequest;
 import com.minseo.lemontree.dto.request.PaymentRequest;
 
 /**
@@ -17,4 +18,11 @@ public interface PaymentService {
      * @param paymentRequest 결제정보
      */
     void payment(PaymentRequest paymentRequest);
+
+    /**
+     * 결제 취소하는 로직입니다.
+     *
+     * @param cancelRequest 결제 취소 정보
+     */
+    void paymentCancel(PaymentCancelRequest cancelRequest);
 }
