@@ -2,6 +2,7 @@ package com.minseo.lemontree.controller;
 
 import com.minseo.lemontree.dto.ApiError;
 import com.minseo.lemontree.exception.AlreadyOrderedException;
+import com.minseo.lemontree.exception.HistoryNotFoundException;
 import com.minseo.lemontree.exception.InsufficientBalanceException;
 import com.minseo.lemontree.exception.MemberInActiveException;
 import com.minseo.lemontree.exception.MemberNotFoundException;
@@ -37,7 +38,7 @@ public class GlobalControllerAdvice {
         return new ResponseEntity<>(new ApiError(false, result.toString()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({MemberNotFoundException.class})
+    @ExceptionHandler({MemberNotFoundException.class, HistoryNotFoundException.class})
     public ResponseEntity<ApiError> handleMemberNotFoundException(Exception e) {
         return new ResponseEntity<>(new ApiError(false, e.getMessage()), HttpStatus.NOT_FOUND);
     }

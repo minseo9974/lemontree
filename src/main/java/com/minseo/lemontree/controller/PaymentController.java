@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * class: MoneyPaymentController.
+ * 머니 결제 API, 결제 취소 API
  *
  * @author devminseo
  * @version 8/10/24
@@ -23,13 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/payment")
 @Slf4j
-public class MoneyPaymentController {
+public class PaymentController {
     private final PaymentService paymentService;
 
     @Auth
     @PostMapping()
     public ResponseEntity<String> paymentRequest(@Valid @RequestBody PaymentRequest request) {
         paymentService.payment(request);
-        return ResponseEntity.ok("Payment Success");
+
+        return ResponseEntity.ok(request.getMemberId() + "님의 Payment Success!");
     }
 }

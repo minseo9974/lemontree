@@ -36,12 +36,14 @@ public class PaymentServiceImpl implements PaymentService {
 
     /**
      * 1. 유효성 검사
-     * 2. 사용자 상태 검사
-     * 3. 잔액 검사
-     * 4. 결제 한도 검사
-     * 5. 결제 진행
+     * 2. 결제 중복 체크 검사
+     * 3. 사용자 상태 검사
+     * 4. 잔액 검사
+     * 5. 결제 한도 검사
+     * 6. 결제 진행
+     * 7. history 기록
      *
-     * @param paymentRequest
+     * @param paymentRequest 결제 정보
      */
     @Transactional(propagation = Propagation.REQUIRED, timeout = 5)
     @Override
@@ -50,7 +52,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .orElseThrow(MemberNotFoundException::new);
 
         // 이미 구매한 주문서 중복 구매 불가 로직
-        if (historyService.checkOrderIdExists(member, paymentRequest.getOrderId())) {
+        if (historyService.checkHistoryExists(member, paymentRequest.getOrderId(), HistoryType.PAYMENT)) {
             throw new AlreadyOrderedException("결제");
         }
 
@@ -69,7 +71,7 @@ public class PaymentServiceImpl implements PaymentService {
         amountUsedService.checkAmountUsed(member, paymentRequest.getProductPrice());
 
         //결제 처리
-        member.updateBalance(member.getBalance() - paymentRequest.getProductPrice());
+        member.updateBalance(Math.subtractExact(member.getBalance(), paymentRequest.getProductPrice()));
 
         // 사용량 업데이트
         amountUsedService.updateAmountUsed(member, paymentRequest.getProductPrice());

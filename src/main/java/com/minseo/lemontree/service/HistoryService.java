@@ -12,12 +12,12 @@ import com.minseo.lemontree.entity.Member;
 public interface HistoryService {
 
     /**
-     * 주문건이 중복으로 발생되지 않게 체크하는 메서드입니다.
+     * 중복으로 발생되지 않게 내역이 존재하는지 체크하는 메서드입니다.
      *
      * @param orderId 주문서 번호
      * @return boolean
      */
-    boolean checkOrderIdExists(Member member, Long orderId);
+    boolean checkHistoryExists(Member member, Long orderId, HistoryType historyType);
 
     /**
      * 새로운 타입의 기록을 만드는 메서드입니다.

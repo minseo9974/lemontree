@@ -1,10 +1,9 @@
-### 결제 요청
-POST http://localhost:8080/payment
+### 페이백 요청
+POST http://localhost:8080/payback
 Authorization: lemontree
 Content-Type: application/json
 
 {
   "memberId": 1999,
-  "productPrice": 2000,
   "orderId": 20
 }

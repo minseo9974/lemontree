@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.QueryHints;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout",value = "5000")})
     Optional<Member> findWithPessimisticLockByMemberId(Long memberId);
 }

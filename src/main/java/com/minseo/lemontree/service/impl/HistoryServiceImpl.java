@@ -30,8 +30,8 @@ public class HistoryServiceImpl implements HistoryService {
      *
      */
     @Override
-    public boolean checkOrderIdExists(Member member, Long orderId) {
-        return historyRepository.existsByMemberAndOrderId(member, orderId);
+    public boolean checkHistoryExists(Member member, Long orderId, HistoryType historyType) {
+        return historyRepository.existsByMemberAndOrderIdAndHistoryType(member, orderId,historyType);
     }
 
     /**
