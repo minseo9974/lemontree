@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -68,5 +69,16 @@ public class Member {
 
     public void updateBalance(Long balance) {
         this.balance = balance;
+    }
+
+    @Builder
+    public Member(MemberStatus memberStatus, Long balance, Long maxBalance, Long onceLimit, Long dayLimit,
+                  Long monthLimit) {
+        this.memberStatus = memberStatus;
+        this.balance = balance;
+        this.maxBalance = maxBalance;
+        this.onceLimit = onceLimit;
+        this.dayLimit = dayLimit;
+        this.monthLimit = monthLimit;
     }
 }

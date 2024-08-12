@@ -41,6 +41,6 @@ public class PaymentController {
     public ResponseEntity<String> paymentCancelRequest(@Valid @RequestBody PaymentCancelRequest request) {
         paymentService.paymentCancel(request);
 
-        return ResponseEntity.ok("님의 Payment Cancel Success!");
+        return ResponseEntity.ok(request.getMemberId() + "님의 Payment Cancel Success!");
     }
 }
