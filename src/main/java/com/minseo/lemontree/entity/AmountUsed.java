@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -59,5 +60,13 @@ public class AmountUsed {
 
     public void updateLastTime(LocalDateTime now) {
         this.lastUpdate = now;
+    }
+
+    @Builder
+    public AmountUsed(Member member, Long dayAmountUsed, Long monthAmountUsed, LocalDateTime lastUpdate) {
+        this.member = member;
+        this.dayAmountUsed = dayAmountUsed;
+        this.monthAmountUsed = monthAmountUsed;
+        this.lastUpdate = lastUpdate;
     }
 }

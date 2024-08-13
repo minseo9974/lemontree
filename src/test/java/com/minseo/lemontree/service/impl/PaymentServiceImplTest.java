@@ -40,15 +40,15 @@ import org.springframework.test.util.ReflectionTestUtils;
 @ExtendWith(MockitoExtension.class)
 class PaymentServiceImplTest {
     @InjectMocks
-    PaymentServiceImpl paymentService;
+    private PaymentServiceImpl paymentService;
     @Mock
-    MemberRepository memberRepository;
+    private MemberRepository memberRepository;
     @Mock
-    HistoryRepository historyRepository;
+    private HistoryRepository historyRepository;
     @Mock
-    HistoryService historyService;
+    private HistoryService historyService;
     @Mock
-    AmountUsedService amountUsedService;
+    private AmountUsedService amountUsedService;
 
     private Member member;
     private Member inActiveMember;

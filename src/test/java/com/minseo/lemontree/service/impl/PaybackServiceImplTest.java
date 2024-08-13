@@ -40,13 +40,13 @@ import org.springframework.test.util.ReflectionTestUtils;
 @ExtendWith(MockitoExtension.class)
 class PaybackServiceImplTest {
     @InjectMocks
-    PaybackServiceImpl paybackService;
+    private PaybackServiceImpl paybackService;
     @Mock
-    MemberRepository memberRepository;
+    private MemberRepository memberRepository;
     @Mock
-    HistoryRepository historyRepository;
+    private HistoryRepository historyRepository;
     @Mock
-    HistoryService historyService;
+    private HistoryService historyService;
 
     private Member member;
     private Member inActiveMember;
