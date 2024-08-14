@@ -1,7 +1,9 @@
 package com.minseo.lemontree.dummy;
 
 import com.minseo.lemontree.domain.MemberStatus;
+import com.minseo.lemontree.entity.AmountUsed;
 import com.minseo.lemontree.entity.Member;
+import java.time.LocalDateTime;
 
 /**
  * class: MemberDummy.
@@ -22,24 +24,12 @@ public class MemberDummy {
                 .build();
     }
 
-    public static Member dummy2() {
-        return Member.builder()
-                .memberStatus(MemberStatus.ACTIVE)
-                .balance(50000L)
-                .maxBalance(10000L)
-                .onceLimit(1000L)
-                .dayLimit(3000L)
-                .monthLimit(5000L)
-                .build();
-    }
-    public static Member dummy3() {
-        return Member.builder()
-                .memberStatus(MemberStatus.ACTIVE)
-                .balance(50000L)
-                .maxBalance(10000L)
-                .onceLimit(10000L)
-                .dayLimit(50000L)
-                .monthLimit(90000L)
+    public static AmountUsed amountUsedDummy(Member member) {
+        return AmountUsed.builder()
+                .member(member)
+                .dayAmountUsed(0L)
+                .monthAmountUsed(0L)
+                .lastUpdate(LocalDateTime.now())
                 .build();
     }
 
