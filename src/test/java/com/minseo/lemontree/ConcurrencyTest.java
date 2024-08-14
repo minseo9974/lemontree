@@ -12,6 +12,7 @@ import com.minseo.lemontree.repository.HistoryRepository;
 import com.minseo.lemontree.repository.MemberRepository;
 import com.minseo.lemontree.service.PaymentService;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -47,6 +48,7 @@ class ConcurrencyTest {
     private Member member;
     private int executeNumber = 1000;
     private PaymentRequest paymentRequestDto;
+
     @BeforeEach
     void setUp() {
         member = MemberDummy.dummy();
@@ -72,22 +74,27 @@ class ConcurrencyTest {
     void paymentWithLock() throws Exception {
 
         final ExecutorService executorService = Executors.newFixedThreadPool(50);
+        final CyclicBarrier barrier = new CyclicBarrier(50);
         final CountDownLatch countDownLatch = new CountDownLatch(executeNumber);
+
         AtomicInteger successCount = new AtomicInteger();
         AtomicInteger failCount = new AtomicInteger();
 
         for (int i = 0; i < executeNumber; i++) {
             executorService.execute(() -> {
                 try {
+                    barrier.await(); // 모든 쓰레드가 시작하게 기다림
                     paymentService.payment(paymentRequestDto);
                     successCount.getAndIncrement();
                 } catch (Exception e) {
                     failCount.getAndIncrement();
+                } finally {
+                    countDownLatch.countDown();
                 }
-                countDownLatch.countDown();
             });
         }
         countDownLatch.await();
+        executorService.shutdown();
 
         assertEquals(1, successCount.get());
         assertEquals(999, failCount.get());
@@ -105,6 +112,7 @@ class ConcurrencyTest {
         ReflectionTestUtils.setField(cancelRequest, "orderId", 10L);
 
         final ExecutorService executorService = Executors.newFixedThreadPool(50);
+        final CyclicBarrier barrier = new CyclicBarrier(50);
         final CountDownLatch countDownLatch = new CountDownLatch(executeNumber);
         AtomicInteger successCount = new AtomicInteger();
         AtomicInteger failCount = new AtomicInteger();
@@ -112,15 +120,18 @@ class ConcurrencyTest {
         for (int i = 0; i < executeNumber; i++) {
             executorService.execute(() -> {
                 try {
+                    barrier.await(); // 모든 쓰레드가 시작하게 기다림
                     paymentService.paymentCancel(cancelRequest);
                     successCount.getAndIncrement();
                 } catch (Exception e) {
                     failCount.getAndIncrement();
+                } finally {
+                    countDownLatch.countDown();
                 }
-                countDownLatch.countDown();
             });
         }
         countDownLatch.await();
+        executorService.shutdown();
 
         assertEquals(1, successCount.get());
         assertEquals(999, failCount.get());
