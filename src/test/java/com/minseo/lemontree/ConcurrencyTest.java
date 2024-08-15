@@ -34,7 +34,7 @@ import org.springframework.test.util.ReflectionTestUtils;
  */
 
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles("test") //H2 활성화
 class ConcurrencyTest {
     @Autowired
     private PaymentService paymentService;
@@ -46,7 +46,7 @@ class ConcurrencyTest {
     @Autowired
     private HistoryRepository historyRepository;
     private Member member;
-    private int executeNumber = 1000;
+    private int executeNumber = 1000; // 동시 요청 개수
     private PaymentRequest paymentRequestDto;
 
     @BeforeEach
@@ -73,12 +73,12 @@ class ConcurrencyTest {
     @DisplayName("결제 Lock Test - 1000번 동시 결제")
     void paymentWithLock() throws Exception {
 
-        final ExecutorService executorService = Executors.newFixedThreadPool(50);
-        final CyclicBarrier barrier = new CyclicBarrier(50);
-        final CountDownLatch countDownLatch = new CountDownLatch(executeNumber);
+        final ExecutorService executorService = Executors.newFixedThreadPool(50); // 스레드 풀 생성
+        final CyclicBarrier barrier = new CyclicBarrier(50); // 스레드가 준비될때까지 대기하다 동시에 실행
+        final CountDownLatch countDownLatch = new CountDownLatch(executeNumber); // 총 작업의 수
 
-        AtomicInteger successCount = new AtomicInteger();
-        AtomicInteger failCount = new AtomicInteger();
+        AtomicInteger successCount = new AtomicInteger(); // 원자성 보장
+        AtomicInteger failCount = new AtomicInteger(); // 일관된 결과 보장
 
         for (int i = 0; i < executeNumber; i++) {
             executorService.execute(() -> {
